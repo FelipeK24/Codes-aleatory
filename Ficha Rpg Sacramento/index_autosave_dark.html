@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha RPG - Sacramento</title>
+  <style>
+    /* Reset e tipografia */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #e5d8b0;
+      font-family: 'Cinzel', sans-serif;
+      letter-spacing: 0.5px;
+      color: #1a1a1a;
+      padding: 20px;
+    }
+    a {
+      text-decoration: none;
+      color: #1a1a1a;
+      text-align: center
+    }
+    .sheet {
+      background: url('https://www.transparenttextures.com/patterns/old-moon.png') repeat;
+      background-color: #fff5e3; /* cor de fundo para complementar a textura */
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      border: 3px solid #1a1a1a;
+      position: relative;
+      border-radius: 10px;
+    }
+    h1.name {
+      font-size: 2rem;
+      border-bottom: 2px solid #1a1a1a;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      font-weight: normal;
+      border-radius: 10px;
+    }
+
+    .grid { display: grid; gap: 20px; }
+    .top { grid-template-columns: 1fr 1fr; }
+    .attributes, .skills {
+      border: 2px solid #1a1a1a;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .attributes h2, .skills h2 { font-size: 1.2rem; margin-bottom: 10px; letter-spacing: 0.5px; font-weight: normal; }
+    .attr-list div { margin-bottom: 8px; }
+    .attr-list span.label { display: inline-block; width: 90px; border-radius: 2%; }
+    input[type="number"] { width: 60px; text-align: center; font-size: 1rem; border: 1px solid #1a1a1a;}
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .skill-item { display: flex; align-items: center; justify-content: space-between; }
+    .skill-item label { flex: 1; }
+    .dots { display: inline-flex; gap: 4px; margin-left: 10px; cursor: pointer; }
+    .dot { width: 16px; height: 16px; border: 1px solid #1a1a1a; border-radius: 50%; background: transparent; transition: background 0.2s; }
+    .dot.filled { background: #1a1a1a; }
+
+    .bottom { grid-template-columns: repeat(2, 1fr); }
+    .box { border: 2px solid #1a1a1a; padding: 10px; border-radius: 10px;}
+    .box.small { min-height: 80px; }
+    .box.large { min-height: 200px; }
+    .footer { text-align: center; font-size: 0.8rem; margin-top: 20px; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <h1 class="name">&nbsp;Nome: <input type="text" placeholder="Seu nome aqui" /></h1>
+    <div class="grid top">
+      <section class="attributes">
+        <h2>Atributos <p1> distribua 4 pontos aqui</p1></h2>
+        <p></p>
+        <div class="attr-list">
+          <div><span class="label">Físico:</span> <input type="number" min="0" max="10" /></div>
+          <div><span class="label">Velocidade:</span> <input type="number" min="0" max="10" /></div>
+          <div><span class="label">Intelecto:</span> <input type="number" min="0" max="10" /></div>
+          <div><span class="label">Coragem:</span> <input type="number" min="0" max="10" /></div>
+        </div>
+      </section>
+
+      <section class="skills">
+        <h2>Antecedentes <p1> distribua 4 + "intelecto" pontos aqui</p1></h2>
+        <div class="skill-grid">
+          <div class="skill-item" data-skill="atencao">
+            <label>Atenção</label>
+            <div class="dots">
+              <span class="dot" data-value="1"></span>
+              <span class="dot" data-value="2"></span>
+              <span class="dot" data-value="3"></span>
+              <span class="dot" data-value="4"></span>
+              <span class="dot" data-value="5"></span>
+            </div>
+          </div>
+          <div class="skill-item" data-skill="roubo">
+            <label>Roubo</label>
+            <div class="dots">
+              <span class="dot" data-value="1"></span>
+              <span class="dot" data-value="2"></span>
+              <span class="dot" data-value="3"></span>
+              <span class="dot" data-value="4"></span>
+              <span class="dot" data-value="5"></span>
+            </div>
+          </div>
+          <div class="skill-item" data-skill="montaria">
+            <label>Montaria</label>
+            <div class="dots">
+              <span class="dot" data-value="1"></span>
+              <span class="dot" data-value="2"></span>
+              <span class="dot" data-value="3"></span>
+              <span class="dot" data-value="4"></span>
+              <span class="dot" data-value="5"></span>
+            </div>
+          </div>
+          <div class="skill-item" data-skill="medicina">
+            <label>Medicina</label>
+            <div class="dots">
+              <span class="dot" data-value="1"></span>
+              <span class="dot" data-value="2"></span>
+              <span class="dot" data-value="3"></span>
+              <span class="dot" data-value="4"></span>
+              <span class="dot" data-value="5"></span>
+            </div>
+          </div>
+          <div class="skill-item" data-skill="negocios">
+            <label>Negócios</label>
+            <div class="dots">
+              <span class="dot" data-value="1"></span>
+              <span class="dot" data-value="2"></span>
+              <span class="dot" data-value="3"></span>
+              <span class="dot" data-value="4"></span>
+              <span class="dot" data-value="5"></span>
+            </div>
+          </div>
+          <div class="skill-item" data-skill="suor">
+            <label>Suor</label>
+            <div class="dots">
+              <span class="dot" data-value="1"></span>
+              <span class="dot" data-value="2"></span>
+              <span class="dot" data-value="3"></span>
+              <span class="dot" data-value="4"></span>
+              <span class="dot" data-value="5"></span>
+            </div>
+          </div>
+          <div class="skill-item" data-skill="tradicao">
+            <label>Tradição</label>
+            <div class="dots">
+              <span class="dot" data-value="1"></span>
+              <span class="dot" data-value="2"></span>
+              <span class="dot" data-value="3"></span>
+              <span class="dot" data-value="4"></span>
+              <span class="dot" data-value="5"></span>
+            </div>
+          </div>
+          <div class="skill-item" data-skill="violencia">
+            <label>Violência</label>
+            <div class="dots">
+              <span class="dot" data-value="1"></span>
+              <span class="dot" data-value="2"></span>
+              <span class="dot" data-value="3"></span>
+              <span class="dot" data-value="4"></span>
+              <span class="dot" data-value="5"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <section class="pain-life-circles" style="margin-top: 20px;">
+        <div class="box">
+            <h3>Círculos de Vida</h3>
+            <div class="dots-row" data-type="life" style="display: flex; gap: 8px;">
+            </div>
+        </div>
+        <div class="box">
+            <h3>Círculos de Dor</h3>
+            <div class="dots-row1" data-type="pain" style="display: flex; gap: 8px;">
+            </div>
+        </div>
+    </section>
+
+    <script>
+    function updateCircles() {
+      // Select the "Físico" input (first in the list)
+      const physicalValueInput = document.querySelector('.attributes .attr-list div:nth-child(1) input[type="number"]');
+      const physicalValue = parseInt(physicalValueInput.value, 10) || 0;
+
+      // Update .dots-row (Life Circles)
+      document.querySelectorAll('.dots-row').forEach(row => {
+        row.innerHTML = ''; // Clear existing dots
+        const totalDots = 6 + physicalValue; // Start with 6 and add based on physicalValue
+        for (let i = 1; i <= totalDots; i++) {
+          const dot = document.createElement('span');
+          dot.className = 'dot';
+          dot.dataset.value = i; // Store the dot's index
+          dot.addEventListener('click', function() {
+            const clickedValue = parseInt(this.dataset.value, 10);
+            const dotsInRow = this.parentNode.querySelectorAll('.dot');
+            dotsInRow.forEach(d => {
+              d.classList.toggle('filled', parseInt(d.dataset.value, 10) <= clickedValue);
+            });
+          });
+          row.appendChild(dot); // Append the dot to the row
+        }
+      });
+
+      // Update .dots-row1 (Pain Circles)
+      document.querySelectorAll('.dots-row1').forEach(row => {
+        row.innerHTML = ''; // Clear existing dots
+        const totalDots = 6; // Fixed number of dots
+        for (let i = 1; i <= totalDots; i++) {
+          const dot = document.createElement('span');
+          dot.className = 'dot';
+          dot.dataset.value = i; // Store the dot's index
+          dot.addEventListener('click', function() {
+            const clickedValue = parseInt(this.dataset.value, 10);
+            const dotsInRow = this.parentNode.querySelectorAll('.dot');
+            dotsInRow.forEach(d => {
+              d.classList.toggle('filled', parseInt(d.dataset.value, 10) <= clickedValue);
+            });
+          });
+          row.appendChild(dot); // Append the dot to the row
+        }
+      });
+    }
+    
+    // Attach event listener to "Físico" input
+    const fisicoInputForCircles = document.querySelector('.attributes .attr-list div:nth-child(1) input[type="number"]');
+    if (fisicoInputForCircles) {
+        fisicoInputForCircles.addEventListener('input', updateCircles);
+    }
+    updateCircles(); // Initialize on page load
+    </script>
+
+    <div class="grid bottom" style="margin-top:20px; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+      <div class="box small">
+        <h3>Movimentos</h3>
+        <div id="Movimento"></div>
+      </div>
+      <div class="box small">
+        <h3>Ações de Combate</h3>
+        <div id="Combate"></div>
+      </div>
+      <div class="box small">
+        <h3>Iniciativa</h3>
+        <input type="number" placeholder="#" min="0" />
+      </div>
+      <div class="box small">
+        <h3>Defesa</h3>
+        <input type="number" placeholder="#" min="5" />
+      </div>
+    </div>
+
+    <div class="box large" style="margin-top:20px;">
+      <h2>Habilidades</h2>
+      <textarea rows="6" style="width:100%; border:1px solid #1a1a1a; font-family:'Cinzel'; font-size:1rem; padding:8px; resize: vertical;" placeholder="Descreva suas habilidades..."></textarea>
+    </div>
+    <div class="box large" style="margin-top:20px;">
+      <h3>História</h3>
+      <textarea rows="6" style="width:100%; border:1px solid #1a1a1a; font-family:'Cinzel'; font-size:1rem; padding:8px; resize: vertical;" placeholder="Descreva sua história..."></textarea>
+      </div>
+        <section class="inventory" style="margin-top:20px;">
+      <div style="border:2px solid #1a1a1a; padding:10px;">
+        <h2 style="font-size:1.2rem; margin-bottom:10px; letter-spacing:0.5px;">Itens</h2>
+        <table style="width:100%; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #1a1a1a; padding:4px; text-align:left;">Item</th>
+              <th style="border:1px solid #1a1a1a; padding:4px; width:100px; text-align:left;">Espaço</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border:1px solid #1a1a1a; padding:4px;">
+                <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+              </td>
+              <td style="border:1px solid #1a1a1a; padding:4px;">
+                <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:1px solid #1a1a1a; padding:4px;">
+                <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+              </td>
+              <td style="border:1px solid #1a1a1a; padding:4px;">
+                <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:1px solid #1a1a1a; padding:4px;">
+                <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+              </td>
+              <td style="border:1px solid #1a1a1a; padding:4px;">
+                <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td style="border:1px solid #1a1a1a; padding:4px;">
+                <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+              </td>
+              <td style="border:1px solid #1a1a1a; padding:4px;">
+                <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+              </td>
+            </tr>
+              <tr>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                  <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                  <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                  <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                  <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                  <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                  <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                  <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                  <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+            </tr>
+          </tbody> </table>
+      </div>
+      <div style="border:2px solid #1a1a1a; padding:10px; margin-top:10px;">
+        <h2 style="font-size:1.2rem; margin-bottom:10px; letter-spacing:0.5px;">Armas</h2>
+        <table style="width:100%; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #1a1a1a; padding:4px; text-align:left;">Arma</th>
+              <th style="border:1px solid #1a1a1a; padding:4px; width:80px; text-align:left;">Espaço</th>
+              <th style="border:1px solid #1a1a1a; padding:4px; width:80px; text-align:left;">Dano</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td style="border:1px solid #1a1a1a; padding:2px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+                <td style="border:1px solid #1a1a1a; padding:4px;">
+                    <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                </td>
+              </tr>
+                <tr>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    <td style="border:1px solid #1a1a1a; padding:4px;">
+                        <textarea style="width:100%; border:none; font-family:'Cinzel', sans-serif; font-size:1rem; padding:4px; resize:none;" rows="1"></textarea>
+                    </td>
+                    
+            </tr> </tbody>
+        </table>
+      </div> </section>  <div class="footer">Sacramento RPG - Ficha de Personagem</div>
+      <br>
+<hr>
+<br>
+      <a href="cavalo.html" target="_blank"><p>Ficha do Cavalo </p></a>
+      <br>
+<hr>
+<br>
+      <a href="Inventario.html" target="_blank"><p>Inventário</p></a>
+      <br>
+      <hr>
+  </div>
+  <script>
+  document.querySelectorAll('.skill-item .dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const container = dot.closest('.dots');
+      const value = parseInt(dot.dataset.value, 10);
+      let fillUpTo = value;
+      const currentFilledDots = Array.from(container.querySelectorAll('.dot.filled')).map(d => parseInt(d.dataset.value, 10));
+      const maxFilled = currentFilledDots.length > 0 ? Math.max(...currentFilledDots) : 0;
+
+      if (dot.classList.contains('filled') && value === maxFilled) {
+        fillUpTo = value - 1; // If clicking the current highest filled dot, unfill it
+      }
+      
+      container.querySelectorAll('.dot').forEach(d => {
+        if (parseInt(d.dataset.value, 10) <= fillUpTo) {
+            d.classList.add('filled');
+        } else {
+            d.classList.remove('filled');
+        }
+      });
+    });
+  });
+
+  // --- Movimento Calculation Logic ---
+  const velocidadeInputElement = document.querySelector('.attributes .attr-list div:nth-child(2) input[type="number"]');
+  const movimentoDisplayElement = document.getElementById('Movimento');
+
+  function calculateAndDisplayMovimento() {
+    if (velocidadeInputElement && movimentoDisplayElement) {
+      let velocidadeVal = parseInt(velocidadeInputElement.value, 10);
+      
+      if (isNaN(velocidadeVal) || velocidadeVal < 0) { // Respect min="0"
+        velocidadeVal = 0;
+      }
+      if (velocidadeVal > 10) { // Respect max="10"
+        velocidadeVal = 10;
+      }
+      const movimentoCalculado = 1 + velocidadeVal;
+      movimentoDisplayElement.textContent = movimentoCalculado;
+    } else {
+      if (movimentoDisplayElement) {
+        movimentoDisplayElement.textContent = '1'; // Default if Velocidade input not found
+      }
+      if (!velocidadeInputElement) {
+        console.error('Elemento de input para Velocidade não encontrado.');
+      }
+      if (!movimentoDisplayElement) {
+        console.error('Elemento de display para Movimento (id="Movimento") não encontrado.');
+      }
+    }
+  }
+
+  if (velocidadeInputElement) {
+    if (velocidadeInputElement.value.trim() === '') {
+      velocidadeInputElement.value = '5';
+    }
+    velocidadeInputElement.addEventListener('input', calculateAndDisplayMovimento);
+    calculateAndDisplayMovimento(); 
+  } else {
+    if (movimentoDisplayElement) {
+      movimentoDisplayElement.textContent = '1'; 
+    }
+    console.error('Input de Velocidade não encontrado. Movimento não pode ser calculado dinamicamente.');
+  }
+
+  // --- Combate Calculation Logic (Corrected) ---
+  const coragemInputElement = document.querySelector('.attributes .attr-list div:nth-child(4) input[type="number"]'); // Coragem is 4th attribute
+  const combateDisplayElement = document.getElementById('Combate');
+
+  function calculateAndDisplayCombate() {
+    if (coragemInputElement && combateDisplayElement) {
+      let coragemVal = parseInt(coragemInputElement.value, 10);
+      
+      if (isNaN(coragemVal) || coragemVal < 0) { // Respect min="0"
+        coragemVal = 0;
+      }
+      if (coragemVal > 10) { // Respect max="10"
+        coragemVal = 10;
+      }
+      const combateCalculado = 1 + coragemVal; // Formula: 1 + Coragem
+      combateDisplayElement.textContent = combateCalculado;
+    } else {
+      if (combateDisplayElement) {
+        combateDisplayElement.textContent = '1'; // Default if Coragem input not found
+      }
+      if (!coragemInputElement) {
+        console.error('Elemento de input para Coragem não encontrado.');
+      }
+      if (!combateDisplayElement) {
+        console.error('Elemento de display para Combate (id="Combate") não encontrado.');
+      }
+    }
+  }
+
+  if (coragemInputElement) {
+    // Set a default value of 5 for "Coragem" if it's empty, for demonstration
+    if (coragemInputElement.value.trim() === '') {
+      coragemInputElement.value = '5';
+    }
+    coragemInputElement.addEventListener('input', calculateAndDisplayCombate);
+    calculateAndDisplayCombate(); // Initial calculation on page load
+  } else {
+    // Fallback if Coragem input is missing
+    if (combateDisplayElement) {
+      combateDisplayElement.textContent = '1'; // Default combate
+    }
+    console.error('Input de Coragem não encontrado. Combate não pode ser calculado dinamicamente.');
+  }
+  // --- End of Combate Calculation Logic ---
+  </script>
+
+<script>
+  const STORAGE_KEY = 'ficha_rpg_data';
+
+  function saveData() {
+    const data = {};
+
+    document.querySelectorAll('input, textarea').forEach((el, i) => {
+      if (el.type === 'text' || el.type === 'number' || el.tagName === 'TEXTAREA') {
+        data[el.name || `field-${i}`] = el.value;
+      }
+    });
+
+    document.querySelectorAll('.skill-item').forEach(item => {
+      const skill = item.dataset.skill;
+      const filled = item.querySelectorAll('.dot.filled').length;
+      data[`dot-${skill}`] = filled;
+    });
+
+    ['life', 'pain'].forEach(type => {
+      document.querySelectorAll(`.dots-row${type === 'pain' ? '1' : ''}`).forEach((row, rIndex) => {
+        const filledCount = row.querySelectorAll('.dot.filled').length;
+        data[`dot-${type}-${rIndex}`] = filledCount;
+      });
+    });
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadData() {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+    document.querySelectorAll('input, textarea').forEach((el, i) => {
+      const key = el.name || `field-${i}`;
+      if (data[key] !== undefined) el.value = data[key];
+    });
+
+    if (typeof calculateAndDisplayMovimento === 'function') calculateAndDisplayMovimento();
+    if (typeof calculateAndDisplayCombate === 'function') calculateAndDisplayCombate();
+    if (typeof updateCircles === 'function') updateCircles();
+
+    document.querySelectorAll('.skill-item').forEach(item => {
+      const skill = item.dataset.skill;
+      const count = data[`dot-${skill}`] || 0;
+      const dots = item.querySelectorAll('.dot');
+      dots.forEach(dot => {
+        dot.classList.toggle('filled', parseInt(dot.dataset.value) <= count);
+      });
+    });
+
+    ['life', 'pain'].forEach(type => {
+      document.querySelectorAll(`.dots-row${type === 'pain' ? '1' : ''}`).forEach((row, rIndex) => {
+        const count = data[`dot-${type}-${rIndex}`] || 0;
+        const dots = row.querySelectorAll('.dot');
+        dots.forEach(dot => {
+          dot.classList.toggle('filled', parseInt(dot.dataset.value) <= count);
+        });
+      });
+    });
+  }
+
+  document.addEventListener('input', (e) => {
+    if (e.target.matches('input, textarea')) saveData();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('dot')) saveData();
+  });
+
+  window.addEventListener('DOMContentLoaded', loadData);
+</script>
+
+
+<style>
+  body.dark-mode {
+    background: #1a1a1a;
+    color: #f5f5f5;
+  }
+  .dark-mode .sheet {
+    background: #2a2a2a;
+    border-color: #f5f5f5;
+  }
+  .dark-mode img {
+    content: url('imagens/Sol.png');
+  }
+  .dark-mode input[type="text"],
+  .dark-mode input[type="number"],
+  .dark-mode textarea {
+    background: #444;
+    color: #fff;
+    border-color: #888;
+  }
+  .dark-mode .dot {
+    border-color: #fff;
+  }
+  .dark-mode .dot.filled {
+    background: #fff;
+  }
+  p1 {
+      font-size: 0.5rem;
+      color: #1a1a1a;
+    }
+  .dark-mode p1 {
+      color: #f5f5f5;
+    }
+  img.fixa {
+  width: 40px;     /* ou qualquer valor fixo */
+  height: auto;     /* mantém a proporção */
+  max-width: none;  /* impede limite de largura */
+  flex-shrink: 0;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+
+<button id="darkModeToggle" style="position: fixed; top: 10px; right: 10px; z-index: 1000; background: #000; color: #fff; border: 1px insent #fff; cursor: pointer;">
+  <img src="imagens/Lua.png" class="fixa" alt="Modo Escuro" />
+</button>
+
+<script>
+  const darkModeToggles = [
+    document.getElementById('darkModeToggle1'),
+    document.getElementById('darkModeToggle2'),
+    document.getElementById('darkModeToggle') // Adicione mais se quiser
+  ];
+
+  function applyDarkModeFromStorage() {
+    const saved = localStorage.getItem('darkMode');
+    if (saved === 'enabled') {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
+
+  darkModeToggles.forEach(toggle => {
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+      });
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', applyDarkModeFromStorage);
+</script>
+</body>
+</html>
